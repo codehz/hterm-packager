@@ -1,5 +1,9 @@
 {
   "name": "hterm-esm",
   "version": "VERSION",
-  "module": "index.mjs"
+  "keywords": ["hterm", "esm", "terminal"],
+  "module": "index.mjs",
+  "repository": "https://github.com/codehz/hterm-packager",
+  "homepage": "https://github.com/codehz/hterm-packager",
+  "license": "SEE LICENSE IN LICENSE"
 }
