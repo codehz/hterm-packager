@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [v1.87, master]
+        version: [hterm-1.87, master]
 
     steps:
       - name: clone google hterm
