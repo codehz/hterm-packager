@@ -2,17 +2,18 @@ name: CI
 
 on: [push]
 
-env:
-  version: hterm-1.87
-
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        version: [hterm-1.87]
 
     steps:
-      - name: clone libapps:${{ env.version }}
-        run: git clone -b ${{ env.version }} https://chromium.googlesource.com/apps/libapps
+      - name: clone libapps:${{ matrix.version }}
+        run: git clone -b ${{ matrix.version }} https://chromium.googlesource.com/apps/libapps
       - name: Setup Python environment
         uses: actions/setup-python@v1.1.1
       - name: build dist
@@ -21,17 +22,20 @@ jobs:
           ./hterm/bin/mkdist
       - name: apply patch
         run: |
+          mkdir dist
           cd libapps/hterm/dist/js
           sed -i 's/var hterm = {};/export const hterm = {};/;s/const lib = {};/export const lib = {};/' hterm_all.js
+          cp hterm_all.js ~/dist
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
         with:
           name: dist
-          path: libapps/hterm/dist/js
-      - name: GitHub Push
-        uses: ad-m/github-push-action@v0.5.0
+          path: dist
+      - name: GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v1.2.5
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} 
-          branch: ${{ env.version }}
-          force: true
-          directory: libapps/hterm/dist/js
+          target_branch: ${{ matrix.version }}
+          build_dir: dist
+          commit_message: "deploy"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
