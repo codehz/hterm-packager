@@ -24,7 +24,7 @@ jobs:
       - name: apply patch
         run: |
           mkdir dist
-          sed 's/var hterm = {};/export const hterm = {};/;s/const lib = {};/export const lib = {};/' libapps/hterm/dist/js/hterm_all.js > dist/index.js
+          sed 's/var hterm = {};/export const hterm = {};/;s/const lib = {};/export const lib = {};/' libapps/hterm/dist/js/hterm_all.js > dist/index.mjs
       - name: build package.json
         run: |
           sed 's/VERSION/${{matrix.version}}/' package-template.json > dist/package.json
