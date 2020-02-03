@@ -30,7 +30,8 @@ jobs:
           sed 's/var hterm = {};/export const hterm = {};/;s/const lib = {};/export const lib = {};/' libapps/hterm/dist/js/hterm_all.js > dist/index.mjs
       - name: build package.json
         run: |
-          sed 's/VERSION/${{matrix.version}}/' package-template.json > dist/package.json
+        cp LICENSE dist
+          sed 's/VERSION/${{matrix.version}}.0/' package-template.json > dist/package.json
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
         with:
