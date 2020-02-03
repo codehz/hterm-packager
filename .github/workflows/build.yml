@@ -1,0 +1,30 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [v1.87, master]
+
+    steps:
+      - name: clone google hterm
+        run: git clone -b ${{ matrix.version }} https://chromium.googlesource.com/apps/libapps
+      - name: Setup Python environment
+        uses: actions/setup-python@v1.1.1
+      - name: build dist
+        run: |
+          cd libapps
+          ./hterm/bin/mkdist
+      - name: apply patch
+        run: |
+          cd libapps/hterm/dist/js
+          sed 's/var hterm = {};/export const hterm = {};/' hterm_all.js
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: dist
+          path: libapps/hterm/dist
