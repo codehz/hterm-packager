@@ -33,7 +33,8 @@ jobs:
         run: |
           cp LICENSE dist
           cp index.d.ts dist
-          sed 's/VERSION/${{matrix.version}}.2/' package-template.json > dist/package.json
+          cp README.md dist
+          sed 's/VERSION/${{matrix.version}}.3/' package-template.json > dist/package.json
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
         with:
