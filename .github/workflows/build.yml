@@ -16,6 +16,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '13'
+          registry-url: 'https://registry.npmjs.org'
       - name: clone libapps:hterm-${{ matrix.version }}
         run: git clone -b hterm-${{ matrix.version }} https://chromium.googlesource.com/apps/libapps
       - name: Setup Python environment
@@ -50,4 +51,4 @@ jobs:
           cd dist
           npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
