@@ -9,11 +9,12 @@ jobs:
     
     strategy:
       matrix:
-        version: [hterm-1.87]
+        version: ["1.87"]
 
     steps:
-      - name: clone libapps:${{ matrix.version }}
-        run: git clone -b ${{ matrix.version }} https://chromium.googlesource.com/apps/libapps
+      - uses: actions/checkout@v2
+      - name: clone libapps:hterm-${{ matrix.version }}
+        run: git clone -b hterm-${{ matrix.version }} https://chromium.googlesource.com/apps/libapps
       - name: Setup Python environment
         uses: actions/setup-python@v1.1.1
       - name: build dist
@@ -24,15 +25,18 @@ jobs:
         run: |
           mkdir dist
           sed 's/var hterm = {};/export const hterm = {};/;s/const lib = {};/export const lib = {};/' libapps/hterm/dist/js/hterm_all.js > dist/index.js
+      - name: build package.json
+        run: |
+          sed 's/VERSION/${{matrix.version}}/' package-template.json > dist/package.json
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
         with:
           name: dist
           path: dist
-      - name: GitHub Pages
+      - name: push to branch
         uses: crazy-max/ghaction-github-pages@v1.2.5
         with:
-          target_branch: ${{ matrix.version }}
+          target_branch: hterm-${{ matrix.version }}
           build_dir: dist
           commit_message: "deploy"
         env:

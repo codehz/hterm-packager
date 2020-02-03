@@ -1,0 +1,5 @@
+{
+  "name": "hterm-esm",
+  "version": "VERSION",
+  "module": "index.mjs"
+}
