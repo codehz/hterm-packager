@@ -1,0 +1,10 @@
+{
+  "name": "hterm-esm",
+  "version": "1.87.4",
+  "keywords": ["hterm", "esm", "terminal", "typescript"],
+  "module": "index.mjs",
+  "types": "index.d.ts",
+  "repository": "https://github.com/codehz/hterm-packager",
+  "homepage": "https://github.com/codehz/hterm-packager",
+  "license": "SEE LICENSE IN LICENSE"
+}
