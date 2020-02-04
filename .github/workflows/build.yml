@@ -34,7 +34,7 @@ jobs:
           cp LICENSE dist
           cp index.d.ts dist
           cp README.md dist
-          sed 's/VERSION/${{matrix.version}}.3/' package-template.json > dist/package.json
+          sed 's/VERSION/${{matrix.version}}.4/' package-template.json > dist/package.json
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
         with:

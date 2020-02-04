@@ -699,7 +699,7 @@ export namespace lib {
      * @implements {lib.Storage}
      * @constructor
      */
-    const Chrome: Storage
+    const Chrome: new () => Storage
 
     /**
      * window.localStorage based class with an async interface that is
@@ -708,7 +708,7 @@ export namespace lib {
      * @implements {lib.Storage}
      * @constructor
      */
-    const Local: Storage
+    const Local: new () => Storage
 
     /**
      * In-memory storage class with an async interface that is interchangeable with
@@ -717,7 +717,7 @@ export namespace lib {
      * @constructor
      * @implements {lib.Storage}
      */
-    const Memory: Storage
+    const Memory: new () => Storage
 
     /**
      * Storage implementation using chrome.settingsPrivate.
@@ -726,7 +726,7 @@ export namespace lib {
      * @constructor
      * @implements {lib.Storage}
      */
-    const TerminalPrivate: Storage
+    const TerminalPrivate: new () => Storage
   }
 }
 export namespace hterm {
@@ -855,6 +855,8 @@ export namespace hterm {
   function openUrl(url: string): void
 
   class Size {
+    width: number
+    height: number
     /**
      * Constructor for a hterm.Size record.
      *
@@ -2220,12 +2222,14 @@ export namespace hterm {
      * The terminal initialization is asynchronous, and shouldn't be used before
      * this method is called.
      */
-    onTerminalReady: () => {}
+    onTerminalReady: () => void
 
     /**
      * Default tab with of 8 to match xterm.
      */
     tabWidth: number
+
+    screenSize: hterm.Size
 
     /**
      * Select a preference profile.
@@ -3921,4 +3925,6 @@ export namespace hterm {
       isComplete(): boolean
     }
   }
+
+  let defaultStorage: lib.Storage
 }
